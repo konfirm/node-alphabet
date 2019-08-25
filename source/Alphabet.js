@@ -1,78 +1,112 @@
+const InvalidInputError = require('./Error/InvalidInput.js');
+const DuplicateCharacterError = require('./Error/DuplicateCharacter.js');
+const stringable = require('./helper/stringable.js');
+
+const storage = new WeakMap();
+
 /**
  * Immutable alphabet
  *
  * @class Alphabet
  */
 class Alphabet {
+	constructor(
+		source = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+	) {
+		const alphabet = stringable(source) ? String(source) : '';
+
+		if (!alphabet.length) {
+			throw new InvalidInputError(source);
+		}
+
+		const duplicate = Array.from(alphabet)
+			.filter((v, i, a) => a.indexOf(v) !== i)
+			.join('');
+
+		if (duplicate.length) {
+			throw new DuplicateCharacterError(alphabet, duplicate);
+		}
+
+		storage.set(this, alphabet);
+	}
+
 	/**
-	 * Get the available characters
+	 * Obtain the configured characters
 	 *
 	 * @readonly
-	 * @static
 	 * @memberof Alphabet
 	 */
-	static get CHARACTERS() {
-		return 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+	get characters() {
+		return storage.get(this);
 	}
 
 	/**
 	 * Get the length of the alphabet
 	 *
 	 * @readonly
-	 * @static
 	 * @memberof Alphabet
 	 */
-	static get length() {
-		return this.CHARACTERS.length;
+	get length() {
+		return this.characters.length;
+	}
+
+	/**
+	 * Extract part of the alphabet and return it as a (singleton) instance of alphabet
+	 *
+	 * @param {number} start
+	 * @param {number} end
+	 * @returns {Alphabet} instance
+	 * @memberof Alphabet
+	 */
+	slice(start, end) {
+		const { constructor, characters } = this;
+
+		return constructor.from(characters.slice(start, end));
 	}
 
 	/**
 	 * Get the character at given index
 	 *
-	 * @static
 	 * @param {number} index
 	 * @returns {string} char
 	 * @memberof Alphabet
 	 */
-	static charAt(index) {
-		return this.CHARACTERS.charAt(index);
+	charAt(index) {
+		return this.characters.charAt(index);
 	}
 
 	/**
 	 * Get the character code at given index
 	 *
-	 * @static
 	 * @param {numer} index
 	 * @returns {number} charcode
 	 * @memberof Alphabet
 	 */
-	static charCodeAt(index) {
-		return this.CHARACTERS.charCodeAt(index);
+	charCodeAt(index) {
+		return this.characters.charCodeAt(index);
 	}
 
 	/**
 	 * Get the index of the given character
 	 *
-	 * @static
 	 * @param {string} char
 	 * @returns {number} index
 	 * @memberof Alphabet
 	 */
-	static indexOf(char) {
-		return this.CHARACTERS.indexOf(char);
+	indexOf(char) {
+		return this.characters.indexOf(char);
 	}
 
 	/**
 	 * Map any amount of indices to the corresponding characters (wrapping the
 	 * indices around if they exceed the length of the alphabet)
 	 *
-	 * @static
 	 * @param {number} ...list
 	 * @returns {string} [char]
 	 * @memberof Alphabet
 	 */
-	static map(...list) {
-		const { length } = this.CHARACTERS;
+	map(...list) {
+		const { length } = this;
 
 		return list.map((index) => this.charAt(index % length));
 	}
@@ -80,23 +114,43 @@ class Alphabet {
 	/**
 	 * Convert the Alphabet into a string
 	 *
-	 * @static
 	 * @returns {string} chars
 	 * @memberof Alphabet
 	 */
-	static toString() {
-		return this.CHARACTERS;
+	toString() {
+		return this.characters;
 	}
 
 	/**
 	 * Ensure the Alphabet is properly JSON-stringified
 	 *
-	 * @static
 	 * @returns
 	 * @memberof Alphabet
 	 */
-	static toJSON() {
-		return String(Alphabet);
+	toJSON() {
+		return String(this);
+	}
+
+	/**
+	 * Obtain a singleton instance of Alphabet representing the provided characters
+	 *
+	 * @static
+	 * @param {*} characters
+	 * @returns
+	 * @memberof Alphabet
+	 */
+	static from(characters) {
+		if (!storage.has(this)) {
+			storage.set(this, new Map());
+		}
+
+		const map = storage.get(this);
+
+		if (!map.has(characters)) {
+			map.set(characters, new this(characters));
+		}
+
+		return map.get(characters);
 	}
 }
 
