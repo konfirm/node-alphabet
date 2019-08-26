@@ -55,6 +55,7 @@ console.log(singleton === instance); //  false
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `characters`             | The characters provided to the Alphabet during construction                                                                                                                   |
 | `length`                 | The number of characters                                                                                                                                                      |
+| `Alphabet(characters)`   | Create a new Alphabet instance, if no characters are provided at all, the default (all characters `a-zA-Z0-9`) is used                                                        |
 | `charAt(index)`          | The character at the specified index (`undefined` if the index is below `0` or above `length`)                                                                                |
 | `charCodeAt(index)`      | The character code at the specified index (`undefined` if the index is below `0` or above `length`)                                                                           |
 | `map(...index)`          | Maps the provided indices to their characters, the indices will be wrapped to be within the Alphabet                                                                          |
