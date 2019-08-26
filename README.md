@@ -1,6 +1,6 @@
 # Alphabet
 
-Immutable alphabet, usable in situation where a fixed set of characters is to be allowed and needs to be trusted to remain the exact same.
+Immutable alphabet, usable in situations where a fixed set of characters is to be allowed and needs to be trusted to remain the exact same.
 
 ## Installation
 
@@ -20,25 +20,62 @@ $ yarn add @konfirm/alphabet
 
 ## Usage
 
+An Alphabet instance is guaranteed to have a unique set of characters, with a minimum of one character.
+
+### Creating an Alphabet instance
+
+Create a new Alphabet instance using the characters you need. If you don't explicitly need multiple Alphabet instances handling the same characters (and their order), consider using the `Alphabet.from` method.
+
+```js
+const Alphabet = require('@konfirm/alphabet');
+
+const hex = new Alphabet('abcdef0123456789');
+```
+
+### `Alphabet.from({string|object} input)`
+
+In order to be more memory efficient and open the possibility to directly compare instances, the static `from` method can be used to ensure a previously created instance is re-used if it's available.
+
+```js
+const Alphabet = require('@konfirm/alphabet');
+
+const singleton = Alphabet.from('abc');
+const proof = Alphabet.from('abc');
+
+console.log(singleton === proof); //  true
+
+const instance = new Alphabet('abc');
+
+console.log(singleton === instance); //  false
+```
+
+### Instance API
+
+| name                     | purpose                                                                                                                                                                       |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `characters`             | The characters provided to the Alphabet during construction                                                                                                                   |
+| `length`                 | The number of characters                                                                                                                                                      |
+| `charAt(index)`          | The character at the specified index (`undefined` if the index is below `0` or above `length`)                                                                                |
+| `charCodeAt(index)`      | The character code at the specified index (`undefined` if the index is below `0` or above `length`)                                                                           |
+| `map(...index)`          | Maps the provided indices to their characters, the indices will be wrapped to be within the Alphabet                                                                          |
+| `indexOf(char)`          | Find the index of the provided character, `-1` if not found                                                                                                                   |
+| `slice([start [, end]])` | Create a new alphabet (singleton) based on a [`slice`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice) of the current alphabet |
+
+### Possible errors
+
+An Alphabet requires its characters to be provided either as string or as object (with toString implemented), with a minimum length of one character. Furthermore all characters must be unique.
+
+| input  | error                   | reason                                                 |
+| ------ | ----------------------- | ------------------------------------------------------ |
+| `''`   | InvalidInputError       | The input does not contain any characters              |
+| `123`  | InvalidInputError       | The input is not a string                              |
+| `null` | InvalidInputError       | The input is not an stringifiable object               |
+| `{}`   | DuplicateCharacterError | The string representation of `{}` is `[Object object]` |
+| `[]`   | InvalidInputError       | The input is an array                                  |
+
 The intended use to subclass the `Alphabet` and overriding the `CHARACTERS` getter method to indicate the supported character set.
 
 The subclass (or `Alphabet` itself of course) can then be used in situations where the characters and their order matter and need a bit more testability than plain strings.
-
-### Properties
-
-| name         | value                                                            | description                              |
-| ------------ | ---------------------------------------------------------------- | ---------------------------------------- |
-| `CHARACTERS` | `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789` | The characters the alphabet consists of  |
-| `length`     | `62`                                                             | The number of characters in the alphabet |
-
-### Methods
-
-| method                | argument          | example                  | description                                                                                             |
-| --------------------- | ----------------- | ------------------------ | ------------------------------------------------------------------------------------------------------- |
-| `Alphabet.charAt`     | `number` index    | `Alphabet.charAt(7)`     | Obtain the character at the specified index (if index exceeds `length`, `undefined` is returned)        |
-| `Alphabet.charCodeAt` | `number` index    | `Alphabet.charCodeAt(7)` | Obtain the character code at the specified index (if `index` exceeds `length`, `undefined` is returned) |
-| `Alphabet.indexOf`    | `string` char     | `Alphabet.indexOf()`     | Obtain the index at which `char` was found, `-1` if `char` is not among `CHARACTERS`                    |
-| `Alphabet.map`        | `...number` index | `Alphabet.map(0, 2, 4)`  | Map the provided arguments into an array of `char`                                                      |
 
 ## License
 
