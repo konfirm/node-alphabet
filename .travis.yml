@@ -1,17 +1,19 @@
 language: node_js
+os: linux
+dist: xenial
 node_js:
-- '7'
-- '8'
-- '9'
-- '10'
-- '11'
-- '12'
-
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
 jobs:
   include:
     - stage: npm release
       if: tag IS present
-      node_js: 12
+      node_js: 14
       deploy:
         provider: npm
         email: rogier+npm@konfirm.eu
@@ -19,4 +21,4 @@ jobs:
           branch: master
           tags: true
         api_key:
-          secure: w8fTKFsteWyf0ouUVT+vQnD945fJsOQH3ZL7Ut80EapQamWTJyochP2wHLMRp2VISiYIH8KHZMmZjXEABYB1IzQT+YcCCoEjzuMjX9ruyvoT4eAkzV0XNtdR4yq7G9oCwzRNHrmSnHzLZkDo0myP2OMTHhUY5fxX7AEL8N1n3QztrIsdHA3J9IfrgQOuNwMp/DGe/WL0RLrFIt3Lk9PhwQH1E24IKK9dJJGT5TGZLQJL9PJCm1T6MfOyzID6vLrwKxIpay6wQzuIJjJPXNojseqw9dfLQoBulal6J3bQzcJZikWJThcIH6clMxxG01SMJA6m82XUwH5kV3stQjZf/czeuBrP3tDCnwdqKVJ6VuhQZQP3Z/O4xVuEzHQBLlmJ7TbzfFpTQ4tvxXdtv8wXqFuvUpz4GRxmOn5gUnbMPtL7W8elv+jImSSC9ZGzIkAdpxURXmTqucQmIDYgugzFLtY8Qp0boVogUcGhwtZ5bJ2Mhbkjo7QXbLXB8destsxmLzFO9IWVTWNZRFGHOggNYZo2cYN2/m3CQd+Au5ZjSCqtimFbPK0Nw1FNxuLaiUQepCYqSZmB95rBGqxbd/d0CEt5mLlzaAVVUpFm3Zbj58+YgFK4UNUNDlTYpfx2jb4h0VajyOIFUIPBTgMzpfIny8ES4adKwFdtel3z7Fqc++E=
+          secure: T6AowPzLOAtmfHJuzvIuyojEbb6OxH+7gfej3+jr4CDj6eSz6zlGbzGg2LuSQdAFHNlDAvNgamgRZ51uPP+5V3LRIEH1JXf4+MLlln1b/3gH4YVWZDjMLE7Uiz6OI7BaOt16CI5Jj96ugrQO778mrBSnPC3Bw84at7oqq1WV77bYOPDg+ByY9jRvITyvXkJxX+P2MLkGpCXr/bAIvBBwVvE3/yboHhGCAaE+6Ka3UYczZayheB+sS1wZ5XZ2RW/EUsSkkfyCYIvmt3rISZN19Fqkz575cC9H0rM41eGsPgbLd3jx0NfGp++exOHY4/RxD0KnS+o4qVJDidg9HgUnOhZlXV2DcauO+GjN9EMnj1L6KwnL+WySMc/PWfSoBG66yJiHNTGA9tU3x8yA5MyVEFpXELSl4haMrt9MaKuz83fcNRhcVwTCxwdYEUCriU/fWKLQiglrWBtHq00YM2O4PhoDRmBquQAswQOcZJCtThGRSxwSdCHFL/rZNoz2Pl4kna1irATcRfkaxqPCjEi29x2Trs5Nb0MT199v+t5SGJ3yreku6JjWgHDGKyZNXMNFihhJMn8t//KsMbNEKTgVnNG2aD3a0P+prGQIBMCTJ5XtT9xDY0fehc97woMwzj30BVO5ARFak/huFfT6XU6piI0dEMhbrw1oeaTWzMYlY+w=
