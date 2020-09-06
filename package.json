@@ -1,6 +1,6 @@
 {
 	"name": "@konfirm/alphabet",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "Immutable alphabet",
 	"main": "source/Alphabet.js",
 	"scripts": {
