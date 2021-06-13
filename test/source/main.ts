@@ -8,70 +8,71 @@ const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
 test('it provides default characters', (t) => {
 	const alphabet = new Alphabet();
-	t.equal('characters' in alphabet, true);
-	t.equal(typeof alphabet.characters, 'string');
-	t.equal(alphabet.characters, chars);
+	t.true('characters' in alphabet, 'has characters member');
+	t.equal(typeof alphabet.characters, 'string', 'characters is a string');
+	t.equal(alphabet.characters, chars, `characters equal ${chars}`);
 
 	t.end();
 });
 
 test('it converts to String', (t) => {
 	const alphabet = new Alphabet();
-	t.equal(String(alphabet), chars);
+	t.equal(String(alphabet), chars, `String(alphabet) equals ${chars}`);
 
 	t.end();
 });
 
 test('it converts to JSON', (t) => {
 	const alphabet = new Alphabet();
-	t.equal(JSON.stringify(alphabet), `"${chars}"`);
+	t.equal(JSON.stringify(alphabet), `"${chars}"`, `JSON.stringify(alphabet) equals "${chars}"`);
 
 	t.end();
 });
 
 test('it has length of 62', (t) => {
 	const alphabet = new Alphabet();
-	t.equal(typeof alphabet.length, 'number');
-	t.equal(alphabet.length, 62);
+	t.equal(typeof alphabet.length, 'number', 'length is a number');
+	t.equal(alphabet.length, 62, 'length equals 62');
 
 	t.end();
 });
 
 test('it implements charAt', (t) => {
 	const alphabet = new Alphabet();
-	t.equal(typeof alphabet.charAt, 'function');
-	t.equal(alphabet.charAt(0), 'a');
-	t.equal(alphabet.charAt(26), 'A');
-	t.equal(alphabet.charAt(52), '0');
+	t.equal(typeof alphabet.charAt, 'function', 'charAt is a function');
+	t.equal(alphabet.charAt(0), 'a', 'charAt(0) is "a"');
+	t.equal(alphabet.charAt(26), 'A', 'charAt(26) is "A"');
+	t.equal(alphabet.charAt(52), '0', 'charAt(52) is "0"');
 
 	t.end();
 });
 
 test('it implements charCodeAt', (t) => {
 	const alphabet = new Alphabet();
-	t.equal(typeof alphabet.charCodeAt, 'function');
-	t.equal(alphabet.charCodeAt(0), 97);
-	t.equal(alphabet.charCodeAt(26), 65);
-	t.equal(alphabet.charCodeAt(52), 48);
+	t.equal(typeof alphabet.charCodeAt, 'function', 'charCodeAt is a function');
+	t.equal(alphabet.charCodeAt(0), 97, 'charCodeAt(0) is 97');
+	t.equal(alphabet.charCodeAt(26), 65, 'charCodeAt(26) is 65');
+	t.equal(alphabet.charCodeAt(52), 48, 'charCodeAt(52) is 48');
 
 	t.end();
 });
 
 test('it implements indexOf', (t) => {
 	const alphabet = new Alphabet();
-	t.equal(typeof alphabet.indexOf, 'function');
-	t.equal(alphabet.indexOf('a'), 0);
-	t.equal(alphabet.indexOf('A'), 26);
-	t.equal(alphabet.indexOf('0'), 52);
+	t.equal(typeof alphabet.indexOf, 'function', 'indexOf is a function');
+	t.equal(alphabet.indexOf('a'), 0, 'indexOf("a") is 0');
+	t.equal(alphabet.indexOf('A'), 26, 'indexOf("A") is 26');
+	t.equal(alphabet.indexOf('0'), 52, 'indexOf("0") is 52');
+	t.equal(alphabet.indexOf('@'), -1, 'indexOf("@") is -1');
 
 	t.end();
 });
 
 test('it implements map', (t) => {
 	const alphabet = new Alphabet();
-	t.deepEqual(alphabet.map(31, 14, 52), ['F', 'o', '0']);
-	t.deepEqual(alphabet.map(1, 27, 53), ['b', 'B', '1']);
 
+	t.deepEqual(alphabet.map(31, 14, 52), ['F', 'o', '0'], 'maps [31, 14, 52] to ["F", "o", "0"]');
+	t.deepEqual(alphabet.map(1, 27, 53), ['b', 'B', '1'], 'maps [1, 27, 53] to ["b", "B", "1"]');
 	t.end();
 });
 
@@ -80,12 +81,12 @@ test('it provides singletons', (t) => {
 	const two = Alphabet.from('abc');
 	const instance = new Alphabet('abc');
 
-	t.true(one === two);
-	t.false(one === instance);
-	t.false(two === instance);
-	t.equal(String(one), String(two));
-	t.equal(String(one), String(instance));
-	t.equal(String(two), String(instance));
+	t.true(one === two, 'one and two are equal');
+	t.false(one === instance, 'one does not equal an instance');
+	t.false(two === instance, 'two does not equal an instance');
+	t.equal(String(one), String(two), 'stringified one and two are equal');
+	t.equal(String(one), String(instance), 'stringified one and instance are equal');
+	t.equal(String(two), String(instance), 'stringified two and instance are equal');
 
 	t.end();
 });
@@ -102,8 +103,8 @@ test('it allows custom characters', (t) => {
 		const instance = new Alphabet(characters as string);
 		const from = Alphabet.from(characters as string);
 
-		t.equal(String(instance), characters);
-		t.equal(String(from), characters);
+		t.equal(String(instance), characters, `creates instance with "${characters}"`);
+		t.equal(String(from), characters, `creates singleton with "${characters}"`);
 	});
 
 	t.end();
@@ -112,21 +113,21 @@ test('it allows custom characters', (t) => {
 
 test('it throws errors', (t) => {
 	each`
-		input        | type      | description
-		-------------|-----------|-------------
-		${''}        | string    | empty string
-		${null}      | null      | null
-		${123}       | number    | 123
-		${true}      | boolean   | true
-		${false}     | boolean   | false
-		${[1, 2, 3]} | array     | 1,2,3
+		input        | type
+		-------------|------
+		${''}        | string
+		${null}      | null
+		${123}       | number
+		${true}      | boolean
+		${false}     | boolean
+		${[1, 2, 3]} | array
 	`((record) => {
-		const { input, type, description } = record as { input: any, [key: string]: string };
+		const { input, type } = record as { input: any, [key: string]: string };
 
 		t.throws(
 			() => new Alphabet(input),
 			InvalidInputError,
-			`Alphabets requires a string(able), got (${type}) ${input}`
+			`throws InvalidInputError for ${type} ${JSON.stringify(input)}`
 		);
 	});
 
@@ -141,7 +142,7 @@ test('it throws errors', (t) => {
 		t.throws(
 			() => new Alphabet(characters),
 			DuplicateCharacterError,
-			`Alphabets cannot contain duplicate characters, found "${duplicate}" in "${characters}"`
+			`throws DuplicateCharacterError for "${characters}" (duplicate "${duplicate}")`
 		);
 	});
 
@@ -152,7 +153,7 @@ test('it slices', (t) => {
 	const one = Alphabet.from('abcdef');
 	const two = Alphabet.from('abc');
 
-	t.true(one.slice(0, 3) === two);
+	t.true(one.slice(0, 3) === two, 'slicing create singletons');
 
 	t.end();
 });
