@@ -6,6 +6,6 @@ import { type } from './type';
  * @param {*} input
  * @returns {boolean} stringable
  */
-export function stringable(input: unknown) {
+export function stringable(input: unknown): boolean {
 	return /string|object/.test(type(input));
 };

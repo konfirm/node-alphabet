@@ -3,6 +3,7 @@ import { DuplicateCharacterError } from './Error/DuplicateCharacter';
 import { stringable } from './helper/stringable';
 
 const storage = new WeakMap();
+const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
 /**
  * Immutable alphabet
@@ -10,9 +11,7 @@ const storage = new WeakMap();
  * @class Alphabet
  */
 export class Alphabet {
-	constructor(
-		source = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-	) {
+	constructor(source: string = characters) {
 		const alphabet = stringable(source) ? String(source) : '';
 
 		if (!alphabet.length) {
@@ -36,7 +35,7 @@ export class Alphabet {
 	 * @readonly
 	 * @memberof Alphabet
 	 */
-	get characters() {
+	get characters(): string {
 		return storage.get(this);
 	}
 
@@ -46,7 +45,7 @@ export class Alphabet {
 	 * @readonly
 	 * @memberof Alphabet
 	 */
-	get length() {
+	get length(): number {
 		return this.characters.length;
 	}
 
@@ -58,7 +57,7 @@ export class Alphabet {
 	 * @returns {Alphabet} instance
 	 * @memberof Alphabet
 	 */
-	slice(start: number, end: number) {
+	slice(start: number, end: number): Alphabet {
 		const { characters } = this;
 		const { constructor: Ctor } = Object.getPrototypeOf(this);
 
@@ -72,7 +71,7 @@ export class Alphabet {
 	 * @returns {string} char
 	 * @memberof Alphabet
 	 */
-	charAt(index: number) {
+	charAt(index: number): string {
 		return this.characters.charAt(index);
 	}
 
@@ -83,7 +82,7 @@ export class Alphabet {
 	 * @returns {number} charcode
 	 * @memberof Alphabet
 	 */
-	charCodeAt(index: number) {
+	charCodeAt(index: number): number {
 		return this.characters.charCodeAt(index);
 	}
 
@@ -94,7 +93,7 @@ export class Alphabet {
 	 * @returns {number} index
 	 * @memberof Alphabet
 	 */
-	indexOf(char: string) {
+	indexOf(char: string): number {
 		return this.characters.indexOf(char);
 	}
 
@@ -106,7 +105,7 @@ export class Alphabet {
 	 * @returns {string} [char]
 	 * @memberof Alphabet
 	 */
-	map(...list: Array<number>) {
+	map(...list: Array<number>): Array<string> {
 		const { length } = this;
 
 		return list.map((index) => this.charAt(index % length));
@@ -118,7 +117,7 @@ export class Alphabet {
 	 * @returns {string} chars
 	 * @memberof Alphabet
 	 */
-	toString() {
+	toString(): string {
 		return this.characters;
 	}
 
@@ -128,7 +127,7 @@ export class Alphabet {
 	 * @returns
 	 * @memberof Alphabet
 	 */
-	toJSON() {
+	toJSON(): string {
 		return String(this);
 	}
 
@@ -140,7 +139,7 @@ export class Alphabet {
 	 * @returns
 	 * @memberof Alphabet
 	 */
-	static from(characters: string) {
+	static from(characters: string): Alphabet {
 		if (!storage.has(this)) {
 			storage.set(this, new Map());
 		}
