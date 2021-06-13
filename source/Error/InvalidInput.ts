@@ -1,18 +1,18 @@
-const type = require('../helper/type.js');
+import { type } from '../helper/type';
 
 /**
  * Error thrown if an Alphabet receives less characters than needed
  *
- * @class InputLengthError
+ * @class InvalidInputError
  * @extends {Error}
  */
-class InputLengthError extends Error {
+export class InvalidInputError extends Error {
 	/**
-	 * Creates an instance of InputLengthError
+	 * Creates an instance of InvalidInputError
 	 *
-	 * @memberof InputLengthError
+	 * @memberof InvalidInputError
 	 */
-	constructor(source) {
+	constructor(source: unknown) {
 		super(
 			`Alphabets requires a string(able), got (${type(source)}) ${source}`
 		);
@@ -26,5 +26,3 @@ class InputLengthError extends Error {
 		Error.captureStackTrace(this, constructor);
 	}
 }
-
-module.exports = InputLengthError;

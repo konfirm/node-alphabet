@@ -4,14 +4,14 @@
  * @class DuplicateCharacterError
  * @extends {Error}
  */
-class DuplicateCharacterError extends Error {
+export class DuplicateCharacterError extends Error {
 	/**
 	 * Creates an instance of DuplicateCharacterError
 	 *
 	 * @param {object} [meta={source, duplicate}]
 	 * @memberof DuplicateCharacterError
 	 */
-	constructor(source, duplicate) {
+	constructor(source: string, duplicate: string) {
 		super(
 			`Alphabets cannot contain duplicate characters, found "${duplicate}" in "${source}"`
 		);
@@ -25,5 +25,3 @@ class DuplicateCharacterError extends Error {
 		Error.captureStackTrace(this, constructor);
 	}
 }
-
-module.exports = DuplicateCharacterError;

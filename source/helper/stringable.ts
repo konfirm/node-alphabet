@@ -1,4 +1,4 @@
-const type = require('./type.js');
+import { type } from './type';
 
 /**
  * Test whether given input is or can be casted to a string
@@ -6,4 +6,6 @@ const type = require('./type.js');
  * @param {*} input
  * @returns {boolean} stringable
  */
-module.exports = (input) => /string|object/.test(type(input));
+export function stringable(input: unknown) {
+	return /string|object/.test(type(input));
+};
