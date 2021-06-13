@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking Change
+
+- There no longer is a default export, CommonJS users should update their use to `const { Alphabet } = require('@konfirm/alphabet');`
+
 ### Fixed
 
 - charAt with an out of bounds index now returns undefined instead of an empty string
