@@ -3,7 +3,7 @@
 Immutable alphabet, usable in situations where a fixed set of unique characters is to be allowed and needs to be trusted to remain the exact same.
 The implementation provides a lot of functionality already provided by string values, with the added benefit that an Alphabet instance is guaranteed to contains only unique characters, and is validated for it only once.
 
-As of version [Unreleased] Alphabet supports Unicode alphabets. If Unicode alphabets were used with prior versions, this may have lead to issues with the semantics of the various methods and even the length property.
+As of version 3.0 Alphabet supports Unicode alphabets. If Unicode alphabets were used with prior versions, this may have lead to issues with the semantics of the various methods and even the length property.
 
 ## Installation
 
@@ -20,6 +20,25 @@ $ npm install --save @konfirm/alphabet
 ```
 $ yarn add @konfirm/alphabet
 ```
+
+## Updating to version 3.0
+
+There are slight differences in how Alphabet works internally, most notable
+
+### No default export
+
+The default export was removed, this means you should now explicitly state you want to import `Alphabet` from the package
+
+```js
+// const Alphabet = require('@konfirm/alphabet');
+const { Alphabet } = require('@konfirm/alphabet');
+```
+
+### Unicode support
+
+If Alphabet was used with multi-byte unicode characters (e.g. emoji), chances are you ran into various issues varying from duplicate characters errors to strange behavior regarding `indexOf` and `charAt`.
+If you have any workarounds in place for this, you should be able to removed those.
+
 
 ## Usage
 

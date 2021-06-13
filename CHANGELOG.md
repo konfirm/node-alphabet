@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+### Added
+### Changed
+### Removed
+
+## [3.0.0] - 2021-06-13
+
 ### Breaking Change
 
 - There no longer is a default export, CommonJS users should update their use to `const { Alphabet } = require('@konfirm/alphabet');`
