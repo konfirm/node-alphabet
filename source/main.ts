@@ -72,7 +72,7 @@ export class Alphabet {
 	 * @memberof Alphabet
 	 */
 	charAt(index: number): string {
-		return this.characters.charAt(index);
+		return this.characters[index];
 	}
 
 	/**

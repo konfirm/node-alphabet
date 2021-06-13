@@ -50,6 +50,8 @@ test('it implements charAt', (t) => {
 	t.equal(alphabet.charAt(0), 'a', 'charAt(0) is "a"');
 	t.equal(alphabet.charAt(26), 'A', 'charAt(26) is "A"');
 	t.equal(alphabet.charAt(52), '0', 'charAt(52) is "0"');
+	t.equal(alphabet.charAt(-1), undefined, 'charAt(-1) is undefined');
+	t.equal(alphabet.charAt(63), undefined, 'charAt(63) is undefined');
 
 	t.end();
 });

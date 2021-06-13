@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+
+- charAt with an out of bounds index now returns undefined instead of an empty string
+
 ### Added
 
 - Typescript compatibility
