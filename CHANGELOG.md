@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - codePointAt function
 - byteLength property (this is the actual size of the string version of the Alphabet)
 - Typescript compatibility
+- ES Modules compatibility
 
 ### Changed
 

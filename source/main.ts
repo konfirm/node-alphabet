@@ -1,10 +1,13 @@
-import { InvalidInputError } from './Error/InvalidInput';
-import { DuplicateCharacterError } from './Error/DuplicateCharacter';
+import { InvalidInputError as InvalidInput } from './Error/InvalidInput';
+import { DuplicateCharacterError as DuplicateCharacter } from './Error/DuplicateCharacter';
 import { type } from './type';
 
 const storage = new WeakMap();
 const defaultCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 const stringable = (input: unknown): boolean => /string|object/.test(type(input));
+
+export const InvalidInputError = InvalidInput;
+export const DuplicateCharacterError = DuplicateCharacter;
 
 /**
  * Immutable alphabet
@@ -18,11 +21,11 @@ export class Alphabet {
 		const duplicate = alphabet.filter((v, i, a) => a.indexOf(v) !== i).join('');
 
 		if (!characters.length) {
-			throw new InvalidInputError(source);
+			throw new InvalidInput(source);
 		}
 
 		if (duplicate.length) {
-			throw new DuplicateCharacterError(characters, duplicate);
+			throw new DuplicateCharacter(characters, duplicate);
 		}
 
 		storage.set(this, { characters, alphabet });
