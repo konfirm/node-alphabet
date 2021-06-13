@@ -18,6 +18,13 @@
 	"keywords": [
 		"alphabet"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/konfirm/node-alphabet.git"
+	},
+	"bugs": {
+		"url": "https://github.com/konfirm/node-alphabet/issues"
+	},
 	"author": "Rogier Spieker <rogier+npm@konfirm.eu>",
 	"license": "MIT",
 	"engines": {
