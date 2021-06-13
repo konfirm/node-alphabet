@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+### Added
+### Changed
+### Removed
+
+## [2.0.1] - 2020-09-06
+
+### Changed
+
+- Added minimum engine
+- Update CI Node.js versions, adding 13 and 14, removing 7
+- CI package publication now happens on Node.js 14
+
 ## [2.0.0] - 2019-08-26
 
 ### Changed
@@ -37,7 +50,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Initial release
 
-[unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v2.0.0...HEAD
+[unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v2.0.1...HEAD
+[2.0.1]: https://github.com/konfirm/node-alphabet/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/konfirm/node-alphabet/compare/v1.0.2...v2.0.0
 [1.0.2]: https://github.com/konfirm/node-alphabet/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/konfirm/node-alphabet/compare/v1.0.0...v1.0.1
