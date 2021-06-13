@@ -8,6 +8,7 @@ const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
 test('it provides default characters', (t) => {
 	const alphabet = new Alphabet();
+
 	t.true('characters' in alphabet, 'has characters member');
 	t.equal(typeof alphabet.characters, 'string', 'characters is a string');
 	t.equal(alphabet.characters, chars, `characters equal ${chars}`);
@@ -17,6 +18,7 @@ test('it provides default characters', (t) => {
 
 test('it converts to String', (t) => {
 	const alphabet = new Alphabet();
+
 	t.equal(String(alphabet), chars, `String(alphabet) equals ${chars}`);
 
 	t.end();
@@ -24,6 +26,7 @@ test('it converts to String', (t) => {
 
 test('it converts to JSON', (t) => {
 	const alphabet = new Alphabet();
+
 	t.equal(JSON.stringify(alphabet), `"${chars}"`, `JSON.stringify(alphabet) equals "${chars}"`);
 
 	t.end();
@@ -31,6 +34,8 @@ test('it converts to JSON', (t) => {
 
 test('it has length of 62', (t) => {
 	const alphabet = new Alphabet();
+
+	t.true('length' in alphabet, 'has length member');
 	t.equal(typeof alphabet.length, 'number', 'length is a number');
 	t.equal(alphabet.length, 62, 'length equals 62');
 
@@ -39,6 +44,8 @@ test('it has length of 62', (t) => {
 
 test('it implements charAt', (t) => {
 	const alphabet = new Alphabet();
+
+	t.true('charAt' in alphabet, 'has charAt member')
 	t.equal(typeof alphabet.charAt, 'function', 'charAt is a function');
 	t.equal(alphabet.charAt(0), 'a', 'charAt(0) is "a"');
 	t.equal(alphabet.charAt(26), 'A', 'charAt(26) is "A"');
@@ -49,6 +56,8 @@ test('it implements charAt', (t) => {
 
 test('it implements charCodeAt', (t) => {
 	const alphabet = new Alphabet();
+
+	t.true('charCodeAt' in alphabet, 'has charCodeAt member')
 	t.equal(typeof alphabet.charCodeAt, 'function', 'charCodeAt is a function');
 	t.equal(alphabet.charCodeAt(0), 97, 'charCodeAt(0) is 97');
 	t.equal(alphabet.charCodeAt(26), 65, 'charCodeAt(26) is 65');
@@ -59,6 +68,8 @@ test('it implements charCodeAt', (t) => {
 
 test('it implements indexOf', (t) => {
 	const alphabet = new Alphabet();
+
+	t.true('indexOf' in alphabet, 'has indexOf member')
 	t.equal(typeof alphabet.indexOf, 'function', 'indexOf is a function');
 	t.equal(alphabet.indexOf('a'), 0, 'indexOf("a") is 0');
 	t.equal(alphabet.indexOf('A'), 26, 'indexOf("A") is 26');
@@ -71,8 +82,11 @@ test('it implements indexOf', (t) => {
 test('it implements map', (t) => {
 	const alphabet = new Alphabet();
 
+	t.true('map' in alphabet, 'has map member')
+	t.equal(typeof alphabet.map, 'function', 'map is a function');
 	t.deepEqual(alphabet.map(31, 14, 52), ['F', 'o', '0'], 'maps [31, 14, 52] to ["F", "o", "0"]');
 	t.deepEqual(alphabet.map(1, 27, 53), ['b', 'B', '1'], 'maps [1, 27, 53] to ["b", "B", "1"]');
+
 	t.end();
 });
 
@@ -153,6 +167,8 @@ test('it slices', (t) => {
 	const one = Alphabet.from('abcdef');
 	const two = Alphabet.from('abc');
 
+	t.true('slice' in one, 'has slice member')
+	t.equal(typeof one.slice, 'function', 'slice is a function');
 	t.true(one.slice(0, 3) === two, 'slicing create singletons');
 
 	t.end();
