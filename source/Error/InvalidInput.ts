@@ -1,4 +1,4 @@
-import { type } from '../helper/type';
+import { type } from '../type';
 
 /**
  * Error thrown if an Alphabet receives less characters than needed

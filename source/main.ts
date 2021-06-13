@@ -1,9 +1,10 @@
 import { InvalidInputError } from './Error/InvalidInput';
 import { DuplicateCharacterError } from './Error/DuplicateCharacter';
-import { stringable } from './helper/stringable';
+import { type } from './type';
 
 const storage = new WeakMap();
 const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const stringable = (input: unknown): boolean => /string|object/.test(type(input));
 
 /**
  * Immutable alphabet
