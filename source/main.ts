@@ -3,7 +3,7 @@ import { DuplicateCharacterError } from './Error/DuplicateCharacter';
 import { type } from './type';
 
 const storage = new WeakMap();
-const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const defaultCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 const stringable = (input: unknown): boolean => /string|object/.test(type(input));
 
 /**
@@ -12,22 +12,20 @@ const stringable = (input: unknown): boolean => /string|object/.test(type(input)
  * @class Alphabet
  */
 export class Alphabet {
-	constructor(source: string = characters) {
-		const alphabet = stringable(source) ? String(source) : '';
+	constructor(source: string = defaultCharacters) {
+		const characters = stringable(source) ? String(source) : '';
+		const alphabet = Array.from(characters);
+		const duplicate = alphabet.filter((v, i, a) => a.indexOf(v) !== i).join('');
 
-		if (!alphabet.length) {
+		if (!characters.length) {
 			throw new InvalidInputError(source);
 		}
 
-		const duplicate = Array.from(alphabet)
-			.filter((v, i, a) => a.indexOf(v) !== i)
-			.join('');
-
 		if (duplicate.length) {
-			throw new DuplicateCharacterError(alphabet, duplicate);
+			throw new DuplicateCharacterError(characters, duplicate);
 		}
 
-		storage.set(this, alphabet);
+		storage.set(this, { characters, alphabet });
 	}
 
 	/**
@@ -37,17 +35,31 @@ export class Alphabet {
 	 * @memberof Alphabet
 	 */
 	get characters(): string {
-		return storage.get(this);
+		const { characters } = storage.get(this);
+
+		return characters;
 	}
 
 	/**
-	 * Get the length of the alphabet
+	 * Get the number of bytes of the alphabet
+	 *
+	 * @readonly
+	 * @memberof Alphabet
+	 */
+	get byteLength(): number {
+		return this.characters.length;
+	}
+
+	/**
+	 * Get the character length of the alphabet
 	 *
 	 * @readonly
 	 * @memberof Alphabet
 	 */
 	get length(): number {
-		return this.characters.length;
+		const { alphabet: { length } } = storage.get(this);
+
+		return length;
 	}
 
 	/**
@@ -59,10 +71,10 @@ export class Alphabet {
 	 * @memberof Alphabet
 	 */
 	slice(start: number, end: number): Alphabet {
-		const { characters } = this;
+		const { alphabet } = storage.get(this);
 		const { constructor: Ctor } = Object.getPrototypeOf(this);
 
-		return Ctor.from(characters.slice(start, end));
+		return Ctor.from(alphabet.slice(start, end).join(''));
 	}
 
 	/**
@@ -73,7 +85,9 @@ export class Alphabet {
 	 * @memberof Alphabet
 	 */
 	charAt(index: number): string {
-		return this.characters[index];
+		const { alphabet } = storage.get(this);
+
+		return alphabet[index];
 	}
 
 	/**
@@ -84,9 +98,9 @@ export class Alphabet {
 	 * @memberof Alphabet
 	 */
 	charCodeAt(index: number): number | undefined {
-		const char = this.charAt(index);
+		const { characters, length } = this;
 
-		return char ? char.charCodeAt(0) : undefined;
+		return index >= 0 && index < length ? characters.charCodeAt(index) : undefined;
 	}
 
 	/**
@@ -110,7 +124,9 @@ export class Alphabet {
 	 * @memberof Alphabet
 	 */
 	indexOf(char: string): number {
-		return this.characters.indexOf(char);
+		const { alphabet } = storage.get(this);
+
+		return alphabet.indexOf(char);
 	}
 
 	/**

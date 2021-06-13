@@ -16,9 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - codePointAt function
+- byteLength property (this is the actual size of the string version of the Alphabet)
 - Typescript compatibility
 
 ### Changed
+
+- Alphabets are now compatible with higher unicode values
+- length now provides the number of characters, see byteLength for the string length
+
 ### Removed
 
 ## [2.0.1] - 2020-09-06

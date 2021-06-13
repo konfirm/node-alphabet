@@ -1,12 +1,9 @@
 import * as test from 'tape';
-import each from 'template-literal-each';
 import { Alphabet } from '../../source/main';
-import { InvalidInputError } from '../../source/Error/InvalidInput';
-import { DuplicateCharacterError } from '../../source/Error/DuplicateCharacter';
 
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
-test('it provides default characters', (t) => {
+test('Alphabet/defaults - characters', (t) => {
 	const alphabet = new Alphabet();
 
 	t.true('characters' in alphabet, 'has characters member');
@@ -16,7 +13,7 @@ test('it provides default characters', (t) => {
 	t.end();
 });
 
-test('it converts to String', (t) => {
+test('Alphabet/defaults - String', (t) => {
 	const alphabet = new Alphabet();
 
 	t.equal(String(alphabet), chars, `String(alphabet) equals ${chars}`);
@@ -24,7 +21,7 @@ test('it converts to String', (t) => {
 	t.end();
 });
 
-test('it converts to JSON', (t) => {
+test('Alphabet/defaults - JSON', (t) => {
 	const alphabet = new Alphabet();
 
 	t.equal(JSON.stringify(alphabet), `"${chars}"`, `JSON.stringify(alphabet) equals "${chars}"`);
@@ -32,7 +29,7 @@ test('it converts to JSON', (t) => {
 	t.end();
 });
 
-test('it has length of 62', (t) => {
+test('Alphabet/defaults - length', (t) => {
 	const alphabet = new Alphabet();
 
 	t.true('length' in alphabet, 'has length member');
@@ -42,7 +39,17 @@ test('it has length of 62', (t) => {
 	t.end();
 });
 
-test('it implements charAt', (t) => {
+test('Alphabet/defaults - byteLength', (t) => {
+	const alphabet = new Alphabet();
+
+	t.true('byteLength' in alphabet, 'has byteLength member');
+	t.equal(typeof alphabet.byteLength, 'number', 'byteLength is a number');
+	t.equal(alphabet.byteLength, 62, 'byteLength equals 62');
+
+	t.end();
+});
+
+test('Alphabet/defaults - charAt', (t) => {
 	const alphabet = new Alphabet();
 
 	t.true('charAt' in alphabet, 'has charAt member')
@@ -56,7 +63,7 @@ test('it implements charAt', (t) => {
 	t.end();
 });
 
-test('it implements charCodeAt', (t) => {
+test('Alphabet/defaults - charCodeAt', (t) => {
 	const alphabet = new Alphabet();
 
 	t.true('charCodeAt' in alphabet, 'has charCodeAt member')
@@ -70,7 +77,7 @@ test('it implements charCodeAt', (t) => {
 	t.end();
 });
 
-test('it implements codePointAt', (t) => {
+test('Alphabet/defaults - codePointAt', (t) => {
 	const alphabet = new Alphabet();
 
 	t.true('codePointAt' in alphabet, 'has codePointAt member')
@@ -84,7 +91,7 @@ test('it implements codePointAt', (t) => {
 	t.end();
 });
 
-test('it implements indexOf', (t) => {
+test('Alphabet/defaults - indexOf', (t) => {
 	const alphabet = new Alphabet();
 
 	t.true('indexOf' in alphabet, 'has indexOf member')
@@ -97,99 +104,15 @@ test('it implements indexOf', (t) => {
 	t.end();
 });
 
-test('it implements map', (t) => {
+test('Alphabet/defaults - map', (t) => {
 	const alphabet = new Alphabet();
 
 	t.true('map' in alphabet, 'has map member')
 	t.equal(typeof alphabet.map, 'function', 'map is a function');
-	t.deepEqual(alphabet.map(31, 14, 52), ['F', 'o', '0'], 'maps [31, 14, 52] to ["F", "o", "0"]');
-	t.deepEqual(alphabet.map(1, 27, 53), ['b', 'B', '1'], 'maps [1, 27, 53] to ["b", "B", "1"]');
-	t.deepEqual(alphabet.map(7, 33, 77), ['h', 'H', 'p'], 'maps [7, 33, 77] to ["h", "H", "p"]');
-	t.deepEqual(alphabet.map(-7, -33, -77), ['3', 'D', 'V'], 'maps [-7, -33, -77] to ["3", "D", "V"]');
-
-	t.end();
-});
-
-test('it provides singletons', (t) => {
-	const one = Alphabet.from('abc');
-	const two = Alphabet.from('abc');
-	const instance = new Alphabet('abc');
-
-	t.true(one === two, 'one and two are equal');
-	t.false(one === instance, 'one does not equal an instance');
-	t.false(two === instance, 'two does not equal an instance');
-	t.equal(String(one), String(two), 'stringified one and two are equal');
-	t.equal(String(one), String(instance), 'stringified one and instance are equal');
-	t.equal(String(two), String(instance), 'stringified two and instance are equal');
-
-	t.end();
-});
-
-test('it allows custom characters', (t) => {
-	each`
-		characters
-		-----------
-		a
-		ABC
-		abcABC01
-		abcdefghijklmnopqrstuvwxyz
-	`(({ characters }) => {
-		const instance = new Alphabet(characters as string);
-		const from = Alphabet.from(characters as string);
-
-		t.equal(String(instance), characters, `creates instance with "${characters}"`);
-		t.equal(String(from), characters, `creates singleton with "${characters}"`);
-	});
-
-	t.end();
-});
-
-
-test('it throws errors', (t) => {
-	each`
-		input        | type
-		-------------|------
-		${''}        | string
-		${null}      | null
-		${123}       | number
-		${true}      | boolean
-		${false}     | boolean
-		${[1, 2, 3]} | array
-	`((record) => {
-		const { input, type } = record as { input: any, [key: string]: string };
-
-		t.throws(
-			() => new Alphabet(input),
-			InvalidInputError,
-			`throws InvalidInputError for ${type} ${JSON.stringify(input)}`
-		);
-	});
-
-	each`
-		characters                     | duplicate
-		-------------------------------|-----------
-		aa                             | a
-		abcdefghijklmnopqrstuvwxyzazby | azby
-	`((record) => {
-		const { characters, duplicate } = record as { [key: string]: string };
-
-		t.throws(
-			() => new Alphabet(characters),
-			DuplicateCharacterError,
-			`throws DuplicateCharacterError for "${characters}" (duplicate "${duplicate}")`
-		);
-	});
-
-	t.end();
-});
-
-test('it slices', (t) => {
-	const one = Alphabet.from('abcdef');
-	const two = Alphabet.from('abc');
-
-	t.true('slice' in one, 'has slice member')
-	t.equal(typeof one.slice, 'function', 'slice is a function');
-	t.true(one.slice(0, 3) === two, 'slicing create singletons');
+	t.deepEqual(alphabet.map(31, 14, 52), ['F', 'o', '0'], 'map(31, 14, 52) to ["F", "o", "0"]');
+	t.deepEqual(alphabet.map(1, 27, 53), ['b', 'B', '1'], 'map(1, 27, 53) to ["b", "B", "1"]');
+	t.deepEqual(alphabet.map(7, 33, 77), ['h', 'H', 'p'], 'map(7, 33, 77) to ["h", "H", "p"]');
+	t.deepEqual(alphabet.map(-7, -33, -77), ['3', 'D', 'V'], 'map(-7, -33, -77) to ["3", "D", "V"]');
 
 	t.end();
 });
