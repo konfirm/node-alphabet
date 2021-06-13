@@ -82,8 +82,10 @@ export class Alphabet {
 	 * @returns {number} charcode
 	 * @memberof Alphabet
 	 */
-	charCodeAt(index: number): number {
-		return this.characters.charCodeAt(index);
+	charCodeAt(index: number): number | undefined {
+		const char = this.charAt(index);
+
+		return char ? char.charCodeAt(0) : undefined;
 	}
 
 	/**

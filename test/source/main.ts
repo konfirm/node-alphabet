@@ -64,6 +64,8 @@ test('it implements charCodeAt', (t) => {
 	t.equal(alphabet.charCodeAt(0), 97, 'charCodeAt(0) is 97');
 	t.equal(alphabet.charCodeAt(26), 65, 'charCodeAt(26) is 65');
 	t.equal(alphabet.charCodeAt(52), 48, 'charCodeAt(52) is 48');
+	t.equal(alphabet.charCodeAt(-1), undefined, 'charCodeAt(-1) is undefined');
+	t.equal(alphabet.charCodeAt(63), undefined, 'charCodeAt(63) is undefined');
 
 	t.end();
 });
