@@ -90,6 +90,8 @@ test('it implements map', (t) => {
 	t.equal(typeof alphabet.map, 'function', 'map is a function');
 	t.deepEqual(alphabet.map(31, 14, 52), ['F', 'o', '0'], 'maps [31, 14, 52] to ["F", "o", "0"]');
 	t.deepEqual(alphabet.map(1, 27, 53), ['b', 'B', '1'], 'maps [1, 27, 53] to ["b", "B", "1"]');
+	t.deepEqual(alphabet.map(7, 33, 77), ['h', 'H', 'p'], 'maps [7, 33, 77] to ["h", "H", "p"]');
+	t.deepEqual(alphabet.map(-7, -33, -77), ['3', 'D', 'V'], 'maps [-7, -33, -77] to ["3", "D", "V"]');
 
 	t.end();
 });

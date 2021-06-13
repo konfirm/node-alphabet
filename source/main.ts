@@ -109,8 +109,9 @@ export class Alphabet {
 	 */
 	map(...list: Array<number>): Array<string> {
 		const { length } = this;
+		const normal = (index: number): number => index < 0 ? normal(length + index) : index;
 
-		return list.map((index) => this.charAt(index % length));
+		return list.map((index) => this.charAt(normal(index) % length));
 	}
 
 	/**

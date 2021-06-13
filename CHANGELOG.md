@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - charAt with an out of bounds index now returns undefined instead of an empty string
 - charCodeAt with an out of bounds index now return undefined instead of NaN
+- map with a negative value now also correctly wraps within the bounds
 
 ### Added
 
