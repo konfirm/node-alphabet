@@ -1,6 +1,6 @@
 {
 	"name": "@konfirm/alphabet",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"description": "Immutable alphabet",
 	"main": "dist/cjs/main.js",
 	"module": "dist/esm/main.mjs",
