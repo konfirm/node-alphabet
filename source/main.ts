@@ -90,6 +90,19 @@ export class Alphabet {
 	}
 
 	/**
+	 * Get the code point at given index
+	 *
+	 * @param {numer} index
+	 * @returns {number} codepoint
+	 * @memberof Alphabet
+	 */
+	codePointAt(index: number): number | undefined {
+		const char = this.charAt(index);
+
+		return char ? char.codePointAt(0) : undefined;
+	}
+
+	/**
 	 * Get the index of the given character
 	 *
 	 * @param {string} char

@@ -70,6 +70,20 @@ test('it implements charCodeAt', (t) => {
 	t.end();
 });
 
+test('it implements codePointAt', (t) => {
+	const alphabet = new Alphabet();
+
+	t.true('codePointAt' in alphabet, 'has codePointAt member')
+	t.equal(typeof alphabet.codePointAt, 'function', 'codePointAt is a function');
+	t.equal(alphabet.codePointAt(0), 97, 'codePointAt(0) is 97');
+	t.equal(alphabet.codePointAt(26), 65, 'codePointAt(26) is 65');
+	t.equal(alphabet.codePointAt(52), 48, 'codePointAt(52) is 48');
+	t.equal(alphabet.codePointAt(-1), undefined, 'codePointAt(-1) is undefined');
+	t.equal(alphabet.codePointAt(63), undefined, 'codePointAt(63) is undefined');
+
+	t.end();
+});
+
 test('it implements indexOf', (t) => {
 	const alphabet = new Alphabet();
 
