@@ -1,5 +1,8 @@
 # Alphabet
 
+[![Release](https://github.com/konfirm/node-alphabet/actions/workflows/release.yml/badge.svg)](https://github.com/konfirm/node-alphabet/actions/workflows/release.yml)
+[![Tests](https://github.com/konfirm/node-alphabet/actions/workflows/tests.yml/badge.svg)](https://github.com/konfirm/node-alphabet/actions/workflows/tests.yml)
+
 Immutable alphabet, usable in situations where a fixed set of unique characters is to be allowed and needs to be trusted to remain the exact same.
 The implementation provides a lot of functionality already provided by string values, with the added benefit that an Alphabet instance is guaranteed to contains only unique characters, and is validated for it only once.
 
