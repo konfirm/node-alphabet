@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Added
 ### Changed
+- updated dependencies
+- moved from Travis CI to Github Actions
+
 ### Removed
 
 ## [3.0.0] - 2021-06-13

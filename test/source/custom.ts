@@ -1,5 +1,5 @@
 import * as test from 'tape';
-import each from 'template-literal-each';
+import { each } from 'template-literal-each';
 import { Alphabet } from '../../source/main';
 import { InvalidInputError } from '../../source/Error/InvalidInput';
 import { DuplicateCharacterError } from '../../source/Error/DuplicateCharacter';
